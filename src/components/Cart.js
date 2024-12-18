@@ -8,6 +8,25 @@ function Cart({ cart, updateCart }) {
 		0
 	)
 
+	function CreateNewArray(name) {
+		let currentPlantSaved = cart.find((plant) => plant.name === name);
+	  
+		if (currentPlantSaved.amount === 1) {
+		  const cartFilteredCurrentPlant = cart.filter(
+			(plant) => plant.name !== name
+		  );
+		  return cartFilteredCurrentPlant;
+		} else {
+		  const cartFilteredCurrentPlant = cart.map(p => {
+			if (p.name === currentPlantSaved.name) {
+			  return { ...p, amount: p.amount - 1 }; 
+			}
+			return p;
+		  });
+		  return cartFilteredCurrentPlant;
+		}
+	  }
+	  
 	return isOpen ? (
 		<div className='jh-cart'>
 			<button
@@ -21,10 +40,12 @@ function Cart({ cart, updateCart }) {
 					<h2>Cart</h2>
 					<ul>
 						{cart.map(({ name, price, amount }, index) => (
-							<div key={`${name}-${index}`}>
+							<li key={`${name}-${index}`}>
 								{name} {price}€ x {amount}
-							</div>
+								<button onClick={() => updateCart(CreateNewArray(name))}>Remove</button>
+							</li>
 						))}
+						
 					</ul>
 					<h3>Total :{total}€</h3>
 					<button onClick={() => updateCart([])}>Empty the cart</button>

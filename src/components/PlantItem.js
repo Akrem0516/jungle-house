@@ -3,7 +3,7 @@ import '../Styles/PlanItem.css'
 
 
 
-function PlantItem({ name, cover, water, light }) {
+function PlantItem({ name, cover, water, light, updateCart, cart }) {
 
 	return (
 		<li  className='jh-plant-item' >
